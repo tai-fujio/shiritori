@@ -18,7 +18,7 @@ RSpec.describe ShiritoriGame do
 
   describe '#computer_attack' do
     subject(:shiritori_game_computer_attack) { shiritori_game.computer_attack }
-    let(:shiritori_game) { ShiritoriGame.new(player_name: 'シリトリプレイヤー') }
+    let!(:shiritori_game) { ShiritoriGame.new(player_name: 'シリトリプレイヤー') }
 
     context 'ShiritoriGame#histories 最後が リンゴ のとき' do
       before { shiritori_game.histories << 'リンゴ' }
@@ -43,5 +43,40 @@ RSpec.describe ShiritoriGame do
         expect(shiritori_game_computer_attack).to eq(nil)
       end
     end
+
+    describe '#validate_shiritori_rule' do
+      subject(:shiritori_game_validate_shiritori_rule) { shiritori_game.validate_shiritori_rule(word) }
+      let(:shiritori_game) { ShiritoriGame.new(player_name: 'シリトリプレイヤー') }
+  
+      context '引数の word が nil のとき' do
+        let(:word) { nil }
+          it { expect(shiritori_game_validate_shiritori_rule).to eq(false) }
+      end
+  
+      context '引数の word の最後の文字が "ン" のとき' do
+        before { ShiritoriGame.all_words.clear }
+        let(:word) { 'ライオン' }
+        it { expect(shiritori_game_validate_shiritori_rule).to eq(false) }
+      end
+  
+      context '引数の word が ShiritoriGame#histories に含まれていたとき' do
+        before { shiritori_game.histories << 'リンゴ' }
+        let(:word) { 'リンゴ' }
+        it { expect(shiritori_game_validate_shiritori_rule).to eq(false) }
+      end
+  
+      context '引数の word の最初の文字が ShiritoriGame#histories の最後の文字と違うとき' do
+        before { shiritori_game.histories << 'リンゴ' }
+        let(:word) { 'ラッパ' }
+        it { expect(shiritori_game_validate_shiritori_rule).to eq(false) }
+      end
+  
+      context '引数の word の最初の文字が ShiritoriGame#histories の最後の文字と同じとき' do
+        before { shiritori_game.histories << 'リンゴ' }
+        let(:word) { 'ゴリラ' }
+        it { expect(shiritori_game_validate_shiritori_rule).to eq(true) }
+      end
+    end
+
   end
 end

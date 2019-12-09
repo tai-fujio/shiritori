@@ -4,7 +4,8 @@ class ShiritoriGame
 
   def initialize(player_name:)
     @histories = []
-    
+    @player_name = player_name
+
   end
 
   # def histories
@@ -39,7 +40,25 @@ class ShiritoriGame
   end
 
   def start
-    "\\_o< Hi, シリトリプレイヤー. Let's enjoy shiritori game\n"
+    "\\_o< Hi, #{@player_name}. Let's enjoy shiritori game\n"
   end
 
+  def validate_shiritori_rule(word)
+    if word.nil?
+      false
+    elsif ShiritoriGame.all_words.include?(word)
+      false
+    elsif
+      word = word.to_s
+      if word.split("")[word.length-1] == "ン"
+        false
+      elsif
+        histories.last.slice(histories.last.size-1) == word.split("")[0]
+        false
+      elsif
+      histories.last.slice(histories.last.size-1) == word.split("")[0]
+      true
+      end
+    end
+  end
 end
