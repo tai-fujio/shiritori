@@ -5,14 +5,17 @@ RSpec.describe ShiritoriGame do
     it 'シリトリのルールが表示される' do
       expect(ShiritoriGame.rule).to eq("すべてカタカナで入力してください\n最後に 'ン' がついたら負けです\n同じ単語を使ったら負けです\n")
     end
-    describe '.all_words' do
-    it { expect(ShiritoriGame.all_words).to eq ["リンゴ", "ゴリラ", "ラッパ", "パリ"] }
-    end
   end
+
+  describe '.all_words' do
+    it { expect(ShiritoriGame.all_words).to eq ["リンゴ", "ゴリラ", "ラッパ", "パリ"] }
+  end
+
   describe '#start' do
     subject(:shiritori_game) { ShiritoriGame.new(player_name: 'シリトリプレイヤー') }
     it { expect(shiritori_game.start).to include("\\_o< Hi, シリトリプレイヤー. Let's enjoy shiritori game\n") }
   end
+
   describe '#computer_attack' do
     subject(:shiritori_game_computer_attack) { shiritori_game.computer_attack }
     let(:shiritori_game) { ShiritoriGame.new(player_name: 'シリトリプレイヤー') }
