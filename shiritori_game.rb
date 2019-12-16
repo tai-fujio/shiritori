@@ -44,21 +44,15 @@ class ShiritoriGame
   end
 
   def validate_shiritori_rule(word)
-    if word.nil?
-      false
-    elsif ShiritoriGame.all_words.include?(word)
-      false
-    elsif
-      word = word.to_s
-      if word.split("")[word.length-1] == "ン"
-        false
-      elsif
-        histories.last.slice(histories.last.size-1) == word.split("")[0]
-        false
-      elsif
-      histories.last.slice(histories.last.size-1) == word.split("")[0]
-      true
+    return false if word.nil?
+    return false if word.split("")[word.length-1] == "ン"
+    lastword_size = histories.last.size
+      if histories.last.slice(lastword_size-1,1) == word.split("")[0]
+        return true
+      elsif histories.last.slice(lastword_size-1,1) != word.split("")[0]
+        return false
+      else return false
       end
-    end
+    return false if ShiritoriGame.all_words.include?(word)
   end
 end

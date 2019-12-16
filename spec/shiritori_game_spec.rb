@@ -54,7 +54,6 @@ RSpec.describe ShiritoriGame do
       end
   
       context '引数の word の最後の文字が "ン" のとき' do
-        before { ShiritoriGame.all_words.clear }
         let(:word) { 'ライオン' }
         it { expect(shiritori_game_validate_shiritori_rule).to eq(false) }
       end
